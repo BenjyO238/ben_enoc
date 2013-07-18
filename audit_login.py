@@ -1,6 +1,8 @@
 #TODO: try catch
 #TODO: optparse
 
+
+
 from datetime import datetime
 from datetime import time, timedelta, tzinfo
 
@@ -23,6 +25,7 @@ full_date = re.compile(r'\w\w\w\s+\w\w\w\s+[0-9]+') #3 char day 3 char month day
 end_date_mark = re.compile(r'.*\+')
 session_line = re.compile(r'SESSION')
 client_ip = re.compile(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')     #(r'.+HOST=[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
+user_id = re.compile(r'USERID:\[[0-9]+\]\s+"\w+"')
 
 # print days.match('Saturday')
 # print full_date.match('Tue Jul  2 05:17:03 2013 00:00+').span()
@@ -60,6 +63,7 @@ def make_date(date_str):
 # print get_date_str(log_f)
 print make_date(get_date_str(log_f))
 
+
 def get_client_ip(ora_log):
     for item in ora_log:
         if session_line.match(item):
@@ -68,3 +72,33 @@ def get_client_ip(ora_log):
                 return item[ip_str[0]:ip_str[1]]
 
 print get_client_ip(log_f)
+
+
+def id_quotes(q_str):
+    text = q_str
+    start_quote = text.find('"')
+    end_quote = text.rfind('"')
+    quote_markers = (start_quote,end_quote)
+    return quote_markers
+
+
+def get_user_id(ora_log):
+    for item in ora_log:
+        if session_line.match(item):
+            if user_id.search(item):
+                uid = user_id.search(item).span()
+                uid_str = item[uid[0]:uid[1]]
+                idq = id_quotes(uid_str)
+                return uid_str[idq[0]+1:idq[1]]
+
+
+print get_user_id(log_f)
+
+
+
+
+
+
+
+
+
