@@ -19,7 +19,7 @@ def process_dir(audit_files):
         log_file = open(file, 'rb')
         log_f = log_file.read().split('\n')
         data = al.process_file(log_f)
-        logins[file] = al.process_file(file)
+        logins[file] = data
         log_file.close()
     return logins
 
