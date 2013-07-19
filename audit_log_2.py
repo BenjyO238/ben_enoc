@@ -109,9 +109,9 @@ def process_file(ora_log):
     return entry
 
 
-record = process_file(log_f)
-
-print record
+# record = process_file(log_f)
+#
+# print record
 
 
 
