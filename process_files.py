@@ -1,5 +1,7 @@
 __author__ = 'Orlowitz'
 
+#TODO add optparse stuff for commandline
+
 
 import os, sys, re
 import audit_log_2 as al
