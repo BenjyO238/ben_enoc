@@ -1,6 +1,8 @@
 __author__ = 'Orlowitz'
 
 #TODO add optparse stuff for commandline
+#TODO write to file then write to db
+#TODO try except
 
 
 import os, sys, re
