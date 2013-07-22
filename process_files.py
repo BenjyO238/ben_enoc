@@ -31,8 +31,17 @@ def process_dir(audit_files):
 log_entries = process_dir(files_to_process)
 
 
-print log_entries
+log_in_data = open('audit_login_data', 'w')
 
 
+for key, value in log_entries.items():
+    # print key, value
+    if value:
+        line = [str(key), value[0].strftime("%Y-%m-%d %H:%M:%S"), str(value[1]), str(value[2])]
+        # print line
+        w_line = '%s, %s, %s,%s' % (line[0],line[1],line[2],line[3])
+        log_in_data.write(w_line + '\n')
+
+log_in_data.close()
 
 
