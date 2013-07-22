@@ -10,7 +10,7 @@ import re, sys, os, json, string, csv
 
 
 
-files_to_process = os.listdir('./audit_files')
+# files_to_process = os.listdir('./audit_files')
 
 '''
 def print_me(p):

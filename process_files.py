@@ -7,11 +7,18 @@ __author__ = 'Orlowitz'
 
 import os, sys, re
 import audit_log_2 as al
+import optparse
+import optparse
 
 
-audit_dir = './audit_files' #directory of audit files
 
+#command line stuff
+parser = optparse.OptionParser()
+parser.add_option('-d', help='audit file directory', dest='audit_dir', default=False, action='store')
 
+(opts, args) = parser.parse_args()
+
+audit_dir = opts.audit_dir #'./audit_files' #directory of audit files
 
 files_to_process = os.listdir(audit_dir)
 
@@ -31,7 +38,7 @@ def process_dir(audit_files):
 log_entries = process_dir(files_to_process)
 
 
-log_in_data = open('audit_login_data', 'w')
+log_in_data = open('audit_login_data.txt', 'a')
 
 
 for key, value in log_entries.items():
