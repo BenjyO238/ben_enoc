@@ -7,6 +7,7 @@ __author__ = 'Orlowitz'
 import os, sys, re
 import audit_log_2 as al
 import optparse
+import shutil
 
 
 
@@ -62,9 +63,15 @@ def write_entries():
 
 # write_entries()
 
+def move_completed_files(files_to_move):
+    files = files_to_move
+    for file in files:
+        shutil.move(file, '../processed_audit_files')
+
 
 def main():
     write_entries()
+    move_completed_files(files_to_process)
 
 
 if __name__ == '__main__':
