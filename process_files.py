@@ -71,7 +71,7 @@ def move_completed_files(files_to_move):
 
 def main():
     write_entries()
-    move_completed_files(files_to_process)
+    move_completed_files(files_to_process) #move files once processed.
 
 
 if __name__ == '__main__':
