@@ -16,6 +16,7 @@ import re, sys, os, csv
 
 #Regex patterns:
 # days = re.compile(r'Sun|Mon|Tue|Wed|Thu|Fri|Sat')
+q = re.compile(r'"')
 full_date = re.compile(r'\w\w\w\s+\w\w\w\s+[0-9]+') #3 char day 3 char month day num- signifies date of session
 end_date_mark = re.compile(r'.*\+')
 session_line = re.compile(r'SESSION')
@@ -38,10 +39,12 @@ return_code = re.compile(r'RETURNCODE:\[[0-9]+\]\s+"[0-9]+"')
 # print session_id.search('SESSIONID:[9] "269809099" ENTRYID:[1] "1" STATEMENT:[1] "1').span()
 # print return_code.search('L:[7] "unknown" ACTION:[3] "100" RETURNCODE:[1] "0" COMMENT$TEXT:[99] "A').span()
 
-#log_file = open('./audit_files/prd2_ora_30626_4.aud', 'rb')
-#log_f = log_file.read().split('\n')
+###testing data file:
+log_file = open('./audit_files/prd2_ora_30626_4.aud', 'rb')
+log_f = log_file.read().split('\n')
 
 
+FIELDS_TO_GRAB = [session_id, user_id, user_host, client_ip, os_user, return_code] #don't need full_date
 
 def get_date_str(a_line):
         end_dt = end_date_mark.match(a_line).span() #get end of slice for date string
@@ -80,11 +83,47 @@ def get_user_id(a_line):
     return uid_str[idq[0]+1:idq[1]]
 
 
-# print get_user_id(log_f)
+def get_field(a_line,reg_ex):
+    field_test = reg_ex.search(a_line)
+    if field_test: #if a match exists
+        field_range = field_test.span()
+        the_field = a_line[field_range[0]:field_range[1]]
+        if q.search(the_field):   #there is a quote so need to call id_quotes
+            idq = id_quotes(the_field)
+            return the_field[idq[0]+1:idq[1]]
+        else:
+            return a_line[field_range[0]:field_range[1]]
 
 
 
+##FIELDS_TO_GRAB = [session_id, user_id, user_host, client_ip, os_user, return_code]
 
+def process_file(ora_log):
+    entry = [] #holder for record
+    field_regexs = FIELDS_TO_GRAB
+    date_count = 0 #need to track counts to get only first entry of each element we need
+    not_done = 0
+    # ip_count = 0
+    # user_count = 0
+    for item in ora_log:
+        if date_count == 0:
+            if full_date.match(item):
+                file_dt = get_date_str(item)
+                entry.append(file_dt)
+                date_count += 1
+        elif date_count == 1 and not_done == 0:
+            if session_line.match(item):
+                not_done += 1 #increment counter so we will stop processing file once we have data
+                for fr in field_regexs:
+                    field = get_field(item,fr) #apply regex for each field in list of regexes
+                    entry.append(field)
+                    print 'added ' + str(field) + ' to array.'
+        else:
+            pass
+    return entry
+
+
+''' old process_file...
 def process_file(ora_log):
     entry = [] #holder for record
     date_count = 0 #need to track counts to get only first entry of each element we need
@@ -104,15 +143,11 @@ def process_file(ora_log):
             entry.append(user_id_add)
             user_count += 1
     return entry
+'''
 
-
-# record = process_file(log_f)
+record = process_file(log_f)
 #
-# print record
-
-
-
-
+print record
 
 
 
