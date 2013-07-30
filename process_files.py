@@ -6,17 +6,17 @@ __author__ = 'Orlowitz'
 
 import os, sys, re
 import audit_log_2 as al
-import optparse
+# import optparse
 import shutil
 import time
 
 
 
 #command line stuff
-parser = optparse.OptionParser()
-parser.add_option('-d', help='audit file directory', dest='audit_dir')
+# parser = optparse.OptionParser()
+# parser.add_option('-d', help='audit file directory', dest='audit_dir')
 
-(opts, args) = parser.parse_args()
+# (opts, args) = parser.parse_args()
 
 audit_dir = sys.argv[1] #opts.audit_dir #'./audit_files' #opts.audit_dir #'./audit_files' #directory of audit files
 current_dir = os.getcwd()
@@ -56,9 +56,11 @@ def write_entries():
     for key, value in log_entries.items():
         # print key, value
         if value:
-            line = [str(key), str(value[0]), str(value[1]), str(value[2])]
+            #line = [str(key), str(value[0]), str(value[1]), str(value[2])]
+            line = [str(key)]
+            more_line = ",".join(value)
             # print line
-            w_line = '%s, %s, %s,%s' % (line[0],line[1],line[2],line[3])
+            w_line = line.extend(more_line)#'%s, %s, %s,%s' % (line[0],line[1],line[2],line[3])
             log_in_data.write(w_line + '\n')
 
     log_in_data.close()
@@ -71,6 +73,7 @@ def move_completed_files(files_to_move):
     for file in files:
         shutil.move(file, current_dir + '/processed_audit_files')
     os.chdir(current_dir)
+
 
 def main():
     write_entries()
