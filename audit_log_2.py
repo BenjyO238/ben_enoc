@@ -23,15 +23,20 @@ client_ip = re.compile(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')     #(r'.+HOST=[0-9]+\
 user_id = re.compile(r'USERID:\[[0-9]+\]\s+"\w+"')
 user_host = re.compile(r'USERHOST:\[[0-9]+\]\s+"[a-zA-Z.0-9]+"')#re.compile(r'USERHOST:\[[0-9]+\]\s+".*"')
 os_user = re.compile(r'OS\$USERID:\[[0-9]+\]\s+"\w+"')
+session_id = re.compile(r'SESSIONID:\[[0-9]+\]\s+"[0-9]+"')
+return_code = re.compile(r'RETURNCODE:\[[0-9]+\]\s+"[0-9]+"')
 
+#regex testing:
 # print days.match('Saturday')
 # print full_date.match('Tue Jul  2 05:17:03 2013 00:00+').span()
 # print end_date_mark.match('Tue Jul  2 05:17:03 2013 00:00+').end()
 # print client_ip.match('Client address: (ADDRESS=(PROTOCOL=tcp)(HOST=10.20.8.22)(PORT=59873)')
 # print client_ip.search('Client address: (ADDRESS=(PROTOCOL=tcp)(HOST=10.20.8.22)(PORT=59873)').span() #use search not match to get proper start
 # print session_line.match('SESSIONID:[9] "26741964')
-print user_host.search('STATEMENT:[1] "1" USERID:[10] "APP_SCHEMA" USERHOST:[23] "sumprdapp05.enernoc.net" TERMINAL:[7]').span()
-print os_user.search('" OS$USERID:[5] "jboss" DBID:[10] "1630961632" PRIV$USED:[1]').span() #end marker not right
+# print user_host.search('STATEMENT:[1] "1" USERID:[10] "APP_SCHEMA" USERHOST:[23] "sumprdapp05.enernoc.net" TERMINAL:[7]').span()
+# print os_user.search('OL=tcp)(HOST=10.20.10.155)(PORT=58571))" OS$USERID:[5] "jboss" DBID:[10] "1630961632" PRIV$USED:[1] "5"').span() #end marker not right
+# print session_id.search('SESSIONID:[9] "269809099" ENTRYID:[1] "1" STATEMENT:[1] "1').span()
+# print return_code.search('L:[7] "unknown" ACTION:[3] "100" RETURNCODE:[1] "0" COMMENT$TEXT:[99] "A').span()
 
 #log_file = open('./audit_files/prd2_ora_30626_4.aud', 'rb')
 #log_f = log_file.read().split('\n')
