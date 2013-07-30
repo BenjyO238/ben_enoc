@@ -56,11 +56,11 @@ def write_entries():
     for key, value in log_entries.items():
         # print key, value
         if value:
-            #line = [str(key), str(value[0]), str(value[1]), str(value[2])]
-            line = [str(key)]
+            line = str(key)
+            #val_str = [str(v) for v in value] #ensure the values are strings for later writing to file
             more_line = ",".join(value)
             # print line
-            w_line = line.extend(more_line)#'%s, %s, %s,%s' % (line[0],line[1],line[2],line[3])
+            w_line = line +',' + more_line
             log_in_data.write(w_line + '\n')
 
     log_in_data.close()
