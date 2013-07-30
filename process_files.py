@@ -71,7 +71,9 @@ def move_completed_files(files_to_move):
     os.chdir(audit_dir)
     files = files_to_move
     for file in files:
-        shutil.move(file, current_dir + '/processed_audit_files')
+        if file != '.DS_Store':
+            # shutil.move(file, os.path.join(current_dir, '/processed_audit_files'))
+            shutil.move(file, current_dir + '/processed_audit_files/')
     os.chdir(current_dir)
 
 
