@@ -21,8 +21,8 @@ end_date_mark = re.compile(r'.*\+')
 session_line = re.compile(r'SESSION')
 client_ip = re.compile(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')     #(r'.+HOST=[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
 user_id = re.compile(r'USERID:\[[0-9]+\]\s+"\w+"')
-user_host = re.compile(r'USERHOST:\[[0-9]+\]\s+".*"')
-os_user = re.compile(r'OS\$USERID:\[[0-9]+\]\s+"\w*"')
+user_host = re.compile(r'USERHOST:\[[0-9]+\]\s+"[a-zA-Z.0-9]+"')#re.compile(r'USERHOST:\[[0-9]+\]\s+".*"')
+os_user = re.compile(r'OS\$USERID:\[[0-9]+\]\s+"\w+"')
 
 # print days.match('Saturday')
 # print full_date.match('Tue Jul  2 05:17:03 2013 00:00+').span()
@@ -35,12 +35,6 @@ print os_user.search('" OS$USERID:[5] "jboss" DBID:[10] "1630961632" PRIV$USED:[
 
 #log_file = open('./audit_files/prd2_ora_30626_4.aud', 'rb')
 #log_f = log_file.read().split('\n')
-
-
-'''
-for i, item in enumerate(log_f):
-    print str(i) + ', ' + item
-'''
 
 
 
