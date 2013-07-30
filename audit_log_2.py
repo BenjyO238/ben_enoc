@@ -40,8 +40,8 @@ return_code = re.compile(r'RETURNCODE:\[[0-9]+\]\s+"[0-9]+"')
 # print return_code.search('L:[7] "unknown" ACTION:[3] "100" RETURNCODE:[1] "0" COMMENT$TEXT:[99] "A').span()
 
 ###testing data file:
-log_file = open('./audit_files/prd2_ora_30626_4.aud', 'rb')
-log_f = log_file.read().split('\n')
+# log_file = open('./audit_files/prd2_ora_30626_4.aud', 'rb')
+# log_f = log_file.read().split('\n')
 
 
 FIELDS_TO_GRAB = [session_id, user_id, user_host, client_ip, os_user, return_code] #don't need full_date
@@ -145,9 +145,9 @@ def process_file(ora_log):
     return entry
 '''
 
-record = process_file(log_f)
-#
-print record
+# record = process_file(log_f)
+# #
+# print record
 
 
 
