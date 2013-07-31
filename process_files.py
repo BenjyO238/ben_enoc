@@ -91,7 +91,7 @@ def move_completed_files(files_to_move):
             shutil.move(file, new_dir)
     os.chdir(current_dir)
 
-
+#TODO filter unwanted users
 def main():
     write_entries()
     print 'Done writing entries. Now moving files.'
