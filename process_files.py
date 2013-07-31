@@ -8,6 +8,7 @@ import os, sys, re
 import audit_log_2 as al
 # import optparse
 import shutil
+from datetime import datetime
 import time
 
 
@@ -67,13 +68,27 @@ def write_entries():
 
 # write_entries()
 
+
+def make_dir():
+    n = datetime.now()
+    new_d = '%s%s%s%s%s%s' % (str(n.year), str(n.month),str(n.day),str(n.hour),str(n.minute), str(n.second))
+    return new_d
+
+
 def move_completed_files(files_to_move):
+    os.chdir(current_dir)
+    dir_name = make_dir()
+    new_dir = current_dir + '/processed_audit_files/'+ dir_name
+    if not os.path.exists(new_dir):
+        os.makedirs(new_dir)
     os.chdir(audit_dir)
+
     files = files_to_move
+
     for file in files:
         if file != '.DS_Store':
             # shutil.move(file, os.path.join(current_dir, '/processed_audit_files'))
-            shutil.move(file, current_dir + '/processed_audit_files/')
+            shutil.move(file, new_dir)
     os.chdir(current_dir)
 
 
