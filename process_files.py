@@ -44,7 +44,7 @@ def process_dir(audit_dir):
 
 
 
-
+#TODO use make_dir and append to file name to write separate files if too big
 def write_entries():
     os.chdir(current_dir)
     try:
