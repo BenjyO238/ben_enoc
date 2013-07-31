@@ -123,28 +123,6 @@ def process_file(ora_log):
     return entry
 
 
-''' old process_file...
-def process_file(ora_log):
-    entry = [] #holder for record
-    date_count = 0 #need to track counts to get only first entry of each element we need
-    ip_count = 0
-    user_count = 0
-    for item in ora_log:
-        if full_date.match(item) and date_count == 0:
-            file_dt = get_date_str(item)
-            entry.append(file_dt)
-            date_count += 1
-        if session_line.match(item) and client_ip.search(item) and ip_count == 0:
-            client_ip_add = get_client_ip(item)
-            entry.append(client_ip_add)
-            ip_count += 1
-        if session_line.match(item) and user_id.search(item) and user_count == 0:
-            user_id_add = get_user_id(item)
-            entry.append(user_id_add)
-            user_count += 1
-    return entry
-'''
-
 # record = process_file(log_f)
 # #
 # print record
