@@ -47,8 +47,8 @@ return_code = re.compile(r'RETURNCODE:\[[0-9]+\]\s+"[0-9]+"')
 FIELDS_TO_GRAB = [session_id, user_id, user_host, client_ip, os_user, return_code] #don't need full_date
 
 def get_date_str(a_line):
-        end_dt = end_date_mark.match(a_line).span() #get end of slice for date string
-        return a_line[:int(end_dt[1]-2)] #end of date is second item in span tuple then subtract two spaces
+    end_dt = end_date_mark.match(a_line).span() #get end of slice for date string
+    return a_line[:int(end_dt[1]-2)] #end of date is second item in span tuple then subtract two spaces
 
 
 def make_date(date_str):
