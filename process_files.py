@@ -22,6 +22,7 @@ import time
 audit_dir = sys.argv[1] #opts.audit_dir #'./audit_files' #opts.audit_dir #'./audit_files' #directory of audit files
 current_dir = os.getcwd()
 files_to_process = os.listdir(audit_dir)
+files_to_process = [f for f in files_to_process if f[-3:] == 'aud'] #get only aud files
 # print files_to_process
 
 
@@ -30,12 +31,11 @@ def process_dir(audit_dir):
     logins = {} #holder for records to write
     os.chdir(audit_dir)
     for file in files_to_process:
-        if file != '.DS_Store' and file[-3:] == 'aud':
-            log_file = open(file, 'rb')
-            log_f = log_file.read().split('\n')
-            data = al.process_file(log_f)
-            logins[file] = data
-            log_file.close()
+        log_file = open(file, 'rb')
+        log_f = log_file.read().split('\n')
+        data = al.process_file(log_f)
+        logins[file] = data
+        log_file.close()
     os.chdir(current_dir)
     return logins
 
@@ -86,9 +86,7 @@ def move_completed_files(files_to_move):
     files = files_to_move
 
     for file in files:
-        if file != '.DS_Store' and file[-3:] == 'aud':
-            # shutil.move(file, os.path.join(current_dir, '/processed_audit_files'))
-            shutil.move(file, new_dir)
+        shutil.move(file, new_dir)
     os.chdir(current_dir)
 
 #TODO filter unwanted users
