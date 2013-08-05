@@ -18,7 +18,7 @@ import re, sys, os, csv
 # days = re.compile(r'Sun|Mon|Tue|Wed|Thu|Fri|Sat')
 q = re.compile(r'"')
 full_date = re.compile(r'\w\w\w\s+\w\w\w\s+[0-9]+') #3 char day 3 char month day num- signifies date of session
-end_date_mark = re.compile(r'.*\+')
+end_date_mark = re.compile(r'.*(\+|-)') #re.compile(r'.*\+')
 session_line = re.compile(r'SESSION')
 client_ip = re.compile(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')     #(r'.+HOST=[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
 user_id = re.compile(r'USERID:\[[0-9]+\]\s+"\w+"')
@@ -93,6 +93,8 @@ def get_field(a_line,reg_ex):
             return the_field[idq[0]+1:idq[1]]
         else:
             return a_line[field_range[0]:field_range[1]]
+    else:
+        return 'None'  #return string none if field is not present
 
 
 
@@ -103,6 +105,7 @@ def process_file(ora_log):
     field_regexs = FIELDS_TO_GRAB
     date_count = 0 #need to track counts to get only first entry of each element we need
     not_done = 0
+    session_count = 0
     # ip_count = 0
     # user_count = 0
     for item in ora_log:
@@ -113,6 +116,7 @@ def process_file(ora_log):
                 date_count += 1
         elif date_count == 1 and not_done == 0:
             if session_line.match(item):
+                session_count += 1 #don't return any entry if there is no "session"- it's not correct file format
                 not_done += 1 #increment counter so we will stop processing file once we have data
                 for fr in field_regexs:
                     field = get_field(item,fr) #apply regex for each field in list of regexes
@@ -120,7 +124,10 @@ def process_file(ora_log):
                     print 'added ' + str(field) + ' to array.'
         else:
             pass
-    return entry
+    if session_count == 1:
+        return entry
+    else:
+        pass #don't return any data
 
 
 # record = process_file(log_f)
