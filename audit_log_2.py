@@ -60,9 +60,9 @@ def make_date(date_str):
 # print make_date(get_date_str(log_f))
 
 
-def get_client_ip(a_line):
-    ip_str = client_ip.search(a_line).span()
-    return a_line[ip_str[0]:ip_str[1]]
+# def get_client_ip(a_line):
+#     ip_str = client_ip.search(a_line).span()
+#     return a_line[ip_str[0]:ip_str[1]]
 
 
 # print get_client_ip(log_f)
@@ -76,11 +76,11 @@ def id_quotes(q_str):
     return quote_markers
 
 
-def get_user_id(a_line):
-    uid = user_id.search(a_line).span()
-    uid_str = a_line[uid[0]:uid[1]]
-    idq = id_quotes(uid_str)
-    return uid_str[idq[0]+1:idq[1]]
+# def get_user_id(a_line):
+#     uid = user_id.search(a_line).span()
+#     uid_str = a_line[uid[0]:uid[1]]
+#     idq = id_quotes(uid_str)
+#     return uid_str[idq[0]+1:idq[1]]
 
 
 def get_field(a_line,reg_ex):
