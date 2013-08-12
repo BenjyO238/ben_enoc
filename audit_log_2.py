@@ -92,7 +92,7 @@ def get_field(a_line,reg_ex):
             idq = id_quotes(the_field)
             return the_field[idq[0]+1:idq[1]]
         else:
-            return a_line[field_range[0]:field_range[1]]
+            return the_field
     else:
         return 'None'  #return string none if field is not present
 
